@@ -19,7 +19,7 @@
         var Message = document.getElementById('Message').value; // values from users' operations
         console.log(Message);
 
-        var websocket_url= "http://window.location.hostname:5000/";
+        var websocket_url= "http://" + window.location.hostname + ":5000/";
         var socket = io(websocket_url);
         socket.connect();
 
