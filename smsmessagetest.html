@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMS Message Test</title>
+    <script src="https://cdn.socket.io/3.1.1/socket.io.min.js"></script>
+</head>
+
+<body>
+<p>Please enter message:<textarea id="Message" style="height:200px;width:900px;word-break:break-all"></textarea><button id="Test Message">Test Message</button></p>
+<div id="results"></div>
+
+<script type="text/javascript">
+    var TestMessage = document.getElementById('Test Message');
+    var results = document.getElementById('results');
+
+
+    TestMessage.addEventListener('click', function() {
+        var Message = document.getElementById('Message').value; // values from users' operations
+        console.log(Message);
+
+        var websocket_url= "http://0.0.0.0:5000/";
+        var socket = io(websocket_url);
+        socket.connect();
+
+
+        var info = {
+        'message':Message
+        }
+
+        socket.emit('process',JSON.stringify(info));
+        results.innerHTML = 'Processing';
+
+        socket.on('response',function (data) {
+          results.innerHTML = JSON.stringify(data.message);
+        });
+
+    }, false);
+
+</script>
+</body>
+</html>
